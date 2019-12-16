@@ -24,6 +24,9 @@
 </head>
 <body>
 	<%
+	if(request.getAttribute("ktdn")!=null)
+		out.print("<script>alert('Lỗi: Tên đăng nhập hoặc mật khẩu không đúng!')</script>");
+	
 	long soluong, tongtien;
 	giohangbo gh = null;
 	if(session.getAttribute("gh")==null){
@@ -57,7 +60,7 @@
                     <li>
                         <a href="dkcontroller">ĐĂNG K&#221;</a>
                     </li>
-                     <%
+                    <%
                     String un = (String)session.getAttribute("un");
             		if(un != null){
                     %>
@@ -203,73 +206,43 @@
                         </div>
                     </div>
                 </div>
-
-
-                <div>
-
+				<div>
 
 
 
-                    <div>
+                    <h4 style="color:red; text-align:center"> </h4>
+                    <h3 style="text-align:center">ĐĂNG NHẬP</h3>
+                    <table align="center">
+
+                        <form action="dncontroller" method="post">
+                        <tbody>
+                            <tr style="height:40px">
+                                <td> Tên đăng nhập:</td>
+                                <td>
+                                    <input name="txtun" type="text" value="">
+
+                                </td>
+                            </tr>
+                            <tr style="height:40px">
+                                <td align="right">  Mật khẩu:</td>
+                                <td>
+                                    <input name="pass" type="password">
+
+                                </td>
+                            </tr>
+                            <tr style="height:40px">
+                                <td></td>
+                                <td>
+                                    <button type="submit">Đăng nhập</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </form>
+                    </table>
 
 
-                    <style type="text/css">
-                        #Datmua form button {
-                            clear: both;
-                            background-color: red;
-                            color: white;
-                            width: 120px;
-                            height: 35px;
-                            display: block;
-                            float: right;
-                            text-align: center;
-                            text-decoration: none;
-                            font-weight: bold;
-                        }
-
-                            #Datmua form button:hover {
-                                background-color: gray;
-                                color: red;
-                            }
-                    </style>
-
-                    <h3> THÔNG TIN CHI TIẾT SÁCH</h3>
-                    <div>
-                    	<%
-                    	sachbean sach = new sachbean();
-                    	sach = (sachbean)request.getAttribute("sach");
-                    	%>
-                        <div style="width:40%; float:left; border-left: dotted 1px; border-color:azure">
-                            <img src="<%=sach.getAnh() %>" width="100%">
-                        </div>
-                        <div style="width:60%; float:left; padding:10px">
-                            <h4 style="font-weight:bold; color:red">Tên sách: <%=sach.getTensach() %>  </h4>
-                            <p style="text-align:justify">
-                                <span style="font-weight:bold"> Mô tả: </span>Để thành công trong môi trường kinh doanh cạnh tranh hiện nay,
-                                các giám đốc dự án phải đạt được kết quả trong phạm thời gian và ngân sách đưa ra. Biết cách áp dụng các quy trình,
-                                phương pháp và kỹ thuật chỉ dẫn trong cuốn Quản Lý Dự Án này,
-                                bạn sẽ tăng tối đa khả năng thực hiện công việc và đảm bảo đạt kết quả tối ưu khi thực hiện dự án.
-                                Được thiết kế phù hợp với tất cả các nhà quản lý ở đủ mọi trình độ,
-                                cẩm nang này sẽ trang bị cho bạn những kiến thức cần thiết trong việc quản lý mọi dự án,
-                                dù lớn hay nhỏ, để đạt đến thành công. Từ việc khởi xướng một dự án, thúc đẩy,
-                                phát triển nhóm dự án đến việc vượt qua những khó khăn, trở ngại;
-                                mỗi một khía cạnh của quản lý dự án chuyện nghiệp đều được trình bày một cách rõ nét.
-                                Cẩm nang bao gồm các hướng dẫn từng bước về hoạch định dự án và 101 mẹo vặt cung cấp cho bạn những lời khuyên thực tế.
-                            </p>
-                            <p style="font-weight:bold"> Giá bán: <span style="color:red; font-size:16pt "> <%=sach.getGia() %> VNĐ </span></p>
-                        </div>
-                        <div>
-                            <div id="Datmua">
-                                <form action="giohangcontroller" method="post">
-                                	<button name="ms" value="<%=sach.getMasach()%>">ĐẶT MUA</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
+             	</div>
+             </div>
         </div>
     </div>
     <!-- /.container -->

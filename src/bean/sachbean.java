@@ -7,20 +7,25 @@ public class sachbean {
 	private String tensach;
 	private String tacgia;
 	private long gia;
+	private long soluong;
 	private String anh;
+	private long sotap;
 	private Date ngaynhap;
 	private String maloai;
 	public sachbean() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public sachbean(String masach, String tensach, String tacgia, long gia, String anh, Date ngaynhap, String maloai) {
+	public sachbean(String masach, String tensach, String tacgia, long gia, long soluong, String anh, long sotap,
+			Date ngaynhap, String maloai) {
 		super();
 		this.masach = masach;
 		this.tensach = tensach;
 		this.tacgia = tacgia;
 		this.gia = gia;
+		this.soluong = soluong;
 		this.anh = anh;
+		this.sotap = sotap;
 		this.ngaynhap = ngaynhap;
 		this.maloai = maloai;
 	}
@@ -48,11 +53,23 @@ public class sachbean {
 	public void setGia(long gia) {
 		this.gia = gia;
 	}
+	public long getSoluong() {
+		return soluong;
+	}
+	public void setSoluong(long soluong) {
+		this.soluong = soluong;
+	}
 	public String getAnh() {
 		return anh;
 	}
 	public void setAnh(String anh) {
 		this.anh = anh;
+	}
+	public long getSotap() {
+		return sotap;
+	}
+	public void setSotap(long sotap) {
+		this.sotap = sotap;
 	}
 	public Date getNgaynhap() {
 		return ngaynhap;
@@ -63,7 +80,7 @@ public class sachbean {
 	public String getMaloai() {
 		return maloai;
 	}
-	public void setMasloai(String maloai) {
+	public void setMaloai(String maloai) {
 		this.maloai = maloai;
 	}
 	

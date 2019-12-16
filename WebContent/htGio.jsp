@@ -1,3 +1,4 @@
+<%@page import="bean.dangnhapbean"%>
 <%@page import="bean.giohangbean"%>
 <%@page import="bo.giohangbo"%>
 <%@page import="bean.sachbean"%>
@@ -55,11 +56,21 @@
                         <a href="sachcontroller">TRANG CHỦ</a>
                     </li>
                     <li>
-                        <a href="/Nguoidung/Dangky">ĐĂNG K&#221;</a>
+                        <a href="dkcontroller">ĐĂNG K&#221;</a>
                     </li>
+                     <%
+                    String un = (String)session.getAttribute("un");
+            		if(un != null){
+                    %>
                     <li>
-                        <a href="/Nguoidung/Dangnhap">ĐĂNG NHẬP</a>
+                        <a href=""><%=un %></a>
                     </li>
+                    <%}
+                    else {%>
+                    <li>
+                        <a href="dncontroller">ĐĂNG NHẬP</a>
+                    </li>
+                    <%} %>
                     <li>
                         <a href="giohangcontroller" style="color: white; font-weight: bold; text-decoration: none;">
                             <img src="images/giohang.gif" />Giỏ Hàng (<%=soluong %>:<%=tongtien %>)
@@ -243,7 +254,7 @@
                             </tr>
                             <tr style="font-weight: bold; color:blue; text-align:right ">
                                 <td colspan="9" align="center">
-                                    <a href="#">ĐẶT HÀNG</a>
+                                    <a href="dathangcontroller">ĐẶT HÀNG</a>
                                 </td>
                             </tr>
                         </tbody>
