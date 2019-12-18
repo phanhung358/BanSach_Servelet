@@ -43,21 +43,33 @@ public class hoadondao {
 	public int Them(long mahoadon, long makh, Date ngaymua, boolean damua) throws Exception{
 		dc.KetNoi();
 		if(ktMa(mahoadon)) return 0;
+		java.sql.Date sqldate = new java.sql.Date(ngaymua.getTime());
 		String sql = "insert into hoadon values(?, ?, ?, ?)";
 		PreparedStatement cmd = dc.cn.prepareStatement(sql);
 		cmd.setLong(1, mahoadon);
 		cmd.setLong(2, makh);
-		cmd.setDate(3, (java.sql.Date)ngaymua);
+		cmd.setDate(3, sqldate);
 		cmd.setBoolean(4, damua);
 		int kq=cmd.executeUpdate();
 		dc.cn.close();
 		return kq;
 	}
-	public int Xoa(String mahoadon) throws Exception{
+	public int Xoa(long mahoadon) throws Exception{
 		dc.KetNoi();
 		String sql = "delete from hoadon where MaHoaDon=?";
 		PreparedStatement cmd = dc.cn.prepareStatement(sql);
-		cmd.setString(1, mahoadon);
+		cmd.setLong(1, mahoadon);
+		int kq=cmd.executeUpdate();
+		dc.cn.close();
+		return kq;
+	}
+	public int XacNhan(long mahoadon) throws Exception{
+		dc.KetNoi();
+		if(!ktMa(mahoadon)) return 0;
+		String sql = "update hoadon set damua=?  where mahoadon=?";
+		PreparedStatement cmd = dc.cn.prepareStatement(sql);
+		cmd.setBoolean(1, true);
+		cmd.setLong(2, mahoadon);
 		int kq=cmd.executeUpdate();
 		dc.cn.close();
 		return kq;

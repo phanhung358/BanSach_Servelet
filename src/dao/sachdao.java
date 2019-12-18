@@ -32,9 +32,9 @@ public class sachdao {
 			String tacgia = rs.getString("tacgia");
 			long gia = rs.getLong("gia");
 			long soluong = rs.getLong("soluong");
-			long sotap = rs.getLong("sotap");
+			String sotap = rs.getString("sotap");
 			String anh = rs.getString("anh");
-			Date ngaynhap = rs.getDate("ngaynhap");
+			Date ngaynhap = rs.getDate("NgayNhap");
 			String maloai = rs.getString("maloai");
 			sachbean sach = new sachbean(masach, tensach, tacgia, gia, soluong, anh, sotap, ngaynhap, maloai);
 			ds.add(sach);
@@ -44,9 +44,10 @@ public class sachdao {
 		dc.cn.close();
 		return ds;
 	}
-	public int Them(String masach, String tensach, String tacgia, long gia, long soluong, Date ngaynhap, String anh, long sotap, String maloai) throws Exception{
+	public int Them(String masach, String tensach, String tacgia, long gia, long soluong, Date ngaynhap, String anh, String sotap, String maloai) throws Exception{
 		dc.KetNoi();
 		if(ktMa(masach)) return 0;
+		java.sql.Date sqldate = new java.sql.Date(ngaynhap.getTime());
 		String sql = "insert into sach values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement cmd = dc.cn.prepareStatement(sql);
 		cmd.setString(1, masach);
@@ -54,28 +55,29 @@ public class sachdao {
 		cmd.setLong(3, soluong);
 		cmd.setLong(4, gia);
 		cmd.setString(5, maloai);
-		cmd.setLong(6, sotap);
+		cmd.setString(6, sotap);
 		cmd.setString(7, anh);
-		cmd.setDate(8, (java.sql.Date)ngaynhap);
+		cmd.setDate(8, sqldate);
 		cmd.setString(9, tacgia);
 		int kq=cmd.executeUpdate();
 		dc.cn.close();
 		return kq;
 	}
-	public int Sua(String masach, String tensach, String tacgia, long gia, long soluong, Date ngaynhap, String anh, long sotap, String maloai) throws Exception{
+	public int Sua(String masach, String tensach, String tacgia, long gia, long soluong, Date ngaynhap, String anh, String sotap, String maloai) throws Exception{
 		dc.KetNoi();
-		if(ktMa(masach)) return 0;
-		String sql = "update sach set masach=? and  tensach=? and  soluong=? and gia=? and maloai=? and sotap=? and anh=? and ngaynhap=? and tacgia=?";
+		if(!ktMa(masach)) return 0;
+		java.sql.Date sqldate = new java.sql.Date(ngaynhap.getTime());
+		String sql = "update sach set tensach=?, soluong=?, gia=?, maloai=?, sotap=?, anh=?, NgayNhap=?, tacgia=? where masach=?";
 		PreparedStatement cmd = dc.cn.prepareStatement(sql);
-		cmd.setString(1, masach);
-		cmd.setString(2, tensach);
-		cmd.setLong(3, soluong);
-		cmd.setLong(4, gia);
-		cmd.setString(5, maloai);
-		cmd.setLong(6, sotap);
-		cmd.setString(7, anh);
-		cmd.setDate(8, (java.sql.Date)ngaynhap);
-		cmd.setString(9, tacgia);
+		cmd.setString(1, tensach);
+		cmd.setLong(2, soluong);
+		cmd.setLong(3, gia);
+		cmd.setString(4, maloai);
+		cmd.setString(5, sotap);
+		cmd.setString(6, anh);
+		cmd.setDate(7, sqldate);
+		cmd.setString(8, tacgia);
+		cmd.setString(9, masach);
 		int kq=cmd.executeUpdate();
 		dc.cn.close();
 		return kq;
@@ -103,9 +105,9 @@ public class sachdao {
 			String tacgia = rs.getString("tacgia");
 			long gia = rs.getLong("gia");
 			long soluong = rs.getLong("soluong");
-			long sotap = rs.getLong("sotap");
+			String sotap = rs.getString("sotap");
 			String anh = rs.getString("anh");
-			Date ngaynhap = rs.getDate("ngaynhap");
+			Date ngaynhap = rs.getDate("NgayNhap");
 			String maloai = rs.getString("maloai");
 			s = new sachbean(masach1, tensach, tacgia, gia, soluong, anh, sotap, ngaynhap, maloai);
 		}

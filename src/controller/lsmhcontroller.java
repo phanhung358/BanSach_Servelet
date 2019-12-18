@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,23 +11,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.giohangbean;
+import bean.chitiethoadonbean;
+import bean.hoadonbean;
 import bo.chitiethoadonbo;
-import bo.giohangbo;
 import bo.hoadonbo;
 import bo.loaibo;
+import bo.sachbo;
 
 /**
- * Servlet implementation class dathangcontroller
+ * Servlet implementation class lsmhcontroller
  */
-@WebServlet("/dathangcontroller")
-public class dathangcontroller extends HttpServlet {
+@WebServlet("/lsmhcontroller")
+public class lsmhcontroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public dathangcontroller() {
+    public lsmhcontroller() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,6 +36,7 @@ public class dathangcontroller extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+    sachbo sbo = new sachbo();
     loaibo lbo = new loaibo();
     hoadonbo hbo = new hoadonbo();
     chitiethoadonbo ctbo = new chitiethoadonbo();
@@ -43,40 +44,32 @@ public class dathangcontroller extends HttpServlet {
 		try {
 			request.setCharacterEncoding("utf-8");
 			response.setCharacterEncoding("utf-8");
+			ArrayList<chitiethoadonbean> dsct = new ArrayList<chitiethoadonbean>();
 			HttpSession session = request.getSession();
 			
-			if(session.getAttribute("un") == null && session.getAttribute("makh") == null) {
-				request.setAttribute("dsloai", lbo.getloai());
-				RequestDispatcher rd = request.getRequestDispatcher("dncontroller");
-				rd.forward(request, response);
-			}
-			else {
-				giohangbo gh = (giohangbo) session.getAttribute("gh");
-				long makh = (long)session.getAttribute("makh");
-				long mahoadon = 0;
-				if(hbo.Max() > 0)
-					mahoadon = hbo.Max() + 1;
-				else
-					mahoadon = 1;
+			if(session.getAttribute("makh") != null) {
 				
-				Date date = new Date();
-
-				if(hbo.Them(mahoadon, makh, date, false) != 0) {
-					for(giohangbean g:gh.ds) {
-						long machitiethd = 0;
-						if(ctbo.Max() > 0)
-							machitiethd = ctbo.Max() + 1;
-						else
-							machitiethd = 1;
-						int m = ctbo.Them(machitiethd, g.getMasach(), (int)g.getSoluong(), mahoadon);
-					}
-					session.setAttribute("gh", null);
+				ArrayList<hoadonbean> dshd = new ArrayList<hoadonbean>();
+				for(hoadonbean h:hbo.gethoadon()) {
+					if(h.getMakh() == (long)session.getAttribute("makh"))
+						dshd.add(h);
 				}
-					
-				response.getWriter().println("WTF");
-				RequestDispatcher rd = request.getRequestDispatcher("sachcontroller");
-				rd.forward(request, response);
+				request.setAttribute("dshd", dshd);
+				if(request.getParameter("machon") != null) {
+					for(chitiethoadonbean c:ctbo.getchitiet())	{
+						if(c.getMahoadon() == Long.parseLong(request.getParameter("machon"))) {
+							dsct.add(c);
+						}
+					}
+					request.setAttribute("dsct", dsct);
+				}
 			}
+			
+			request.setAttribute("dsloai", lbo.getloai());
+			request.setAttribute("dssach", sbo.getsach());
+			
+			RequestDispatcher rd = request.getRequestDispatcher("lichsumuahang.jsp");
+			rd.forward(request, response);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

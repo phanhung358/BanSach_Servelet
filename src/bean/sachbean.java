@@ -9,14 +9,14 @@ public class sachbean {
 	private long gia;
 	private long soluong;
 	private String anh;
-	private long sotap;
+	private String sotap;
 	private Date ngaynhap;
 	private String maloai;
 	public sachbean() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public sachbean(String masach, String tensach, String tacgia, long gia, long soluong, String anh, long sotap,
+	public sachbean(String masach, String tensach, String tacgia, long gia, long soluong, String anh, String sotap,
 			Date ngaynhap, String maloai) {
 		super();
 		this.masach = masach;
@@ -65,10 +65,10 @@ public class sachbean {
 	public void setAnh(String anh) {
 		this.anh = anh;
 	}
-	public long getSotap() {
+	public String getSotap() {
 		return sotap;
 	}
-	public void setSotap(long sotap) {
+	public void setSotap(String sotap) {
 		this.sotap = sotap;
 	}
 	public Date getNgaynhap() {

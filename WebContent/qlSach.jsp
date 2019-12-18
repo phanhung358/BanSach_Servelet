@@ -26,7 +26,7 @@
 	%>
 	<div class="offset-3 col-lg-6">
 		<div class="container">
-			<form action="SachAdminController" method="post" class="shadow p-3 my-3">
+			<form action="SachAdminController" method="post" class="shadow p-3 my-3" enctype="multipart/form-data">
 			  <div class="form-group">
 			    <label for="email">Mã sách:</label>
 			    <input type="text" class="form-control" name="txtms" value="<%=ss!=null?ss.getMasach():""%>">
@@ -57,7 +57,7 @@
 			  </div>
 			  <div class="form-group">
 			    <label for="pwd">Số tập:</label>
-			    <input type="number" min="0" class="form-control" name="txtst" value="<%=ss!=null?ss.getSotap():""%>">
+			    <input type="text" class="form-control" name="txtst" value="<%=ss!=null?ss.getSotap():""%>">
 			  </div>
 			  <div class="form-group">
 			    <label for="pwd">Mã loại:</label>
@@ -70,8 +70,8 @@
 				<%} %>
 				</select>
 			  </div>
-			  <button type="submit" class="btn btn-outline-success" name="butthem">Thêm</button>
-			  <button type="submit" class="btn btn-outline-primary" name="butsua">Sửa</button>
+			  <input type="submit" class="btn btn-outline-success" name="them" value="Thêm">
+			  <input type="submit" class="btn btn-outline-primary" name="sua" value="Sửa">
 			</form>
 		</div>
 	</div>
@@ -88,7 +88,7 @@
 			<td><%=s.getGia() %></td>
 			<td><%=s.getSoluong() %></td>
 			<td><%=s.getNgaynhap() %></td>
-			<td><%=s.getAnh() %></td>
+			<td><img alt="Ảnh mặt hàng" src="<%=s.getAnh() %>" height="90" width="60"></td>
 			<td><%=s.getMaloai() %></td>
 			<td><button class="btn btn-primary"><a class="text-light" href="SachAdminController?mschon=<%=s.getMasach() %>"> Chọn </a></button></td>
 			<td><button class="btn btn-danger"><a class="text-light" href="SachAdminController?msxoa=<%=s.getMasach() %>"> Xóa </a></button></td>

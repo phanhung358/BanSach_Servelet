@@ -8,7 +8,7 @@ import bean.chitiethoadonbean;
 
 public class chitiethoadondao {
 	dungchung dc = new dungchung();
-	public ArrayList<chitiethoadonbean> gethoadon() throws Exception{
+	public ArrayList<chitiethoadonbean> getchitiet() throws Exception{
 		ArrayList<chitiethoadonbean> ds = new ArrayList<chitiethoadonbean>();
 		//b1: Kết nối vào CSDL
 		dc.KetNoi();
@@ -52,21 +52,13 @@ public class chitiethoadondao {
 		dc.cn.close();
 		return kq;
 	}
-	public int Xoa(String mahoadon) throws Exception{
+	public int Xoa(long mahoadon) throws Exception{
 		dc.KetNoi();
 		String sql = "delete from ChiTietHoaDon where MaHoaDon=?";
 		PreparedStatement cmd = dc.cn.prepareStatement(sql);
-		cmd.setString(1, mahoadon);
+		cmd.setLong(1, mahoadon);
 		int kq=cmd.executeUpdate();
 		dc.cn.close();
-		return kq;
-	}
-	public long Max() throws Exception{
-		String sql = "select MAX(MaChiTietHD) from ChiTietHoaDon";
-		PreparedStatement cmd = dc.cn.prepareStatement(sql);
-		ResultSet rs = cmd.executeQuery();
-		long kq=rs.getLong(1);
-		rs.close();
 		return kq;
 	}
 }

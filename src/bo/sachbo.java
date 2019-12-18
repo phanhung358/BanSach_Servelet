@@ -11,10 +11,10 @@ public class sachbo {
 	public ArrayList<sachbean> getsach() throws Exception{
 		return s.getsach();
 	}
-	public int Them(String masach, String tensach, String tacgia, long gia, long soluong, Date ngaynhap, String anh, long sotap, String maloai) throws Exception{
+	public int Them(String masach, String tensach, String tacgia, long gia, long soluong, Date ngaynhap, String anh, String sotap, String maloai) throws Exception{
 		return s.Them(masach, tensach, tacgia, gia, soluong, ngaynhap, anh, sotap, maloai);
 	}
-	public int Sua(String masach, String tensach, String tacgia, long gia, long soluong, Date ngaynhap, String anh, long sotap, String maloai) throws Exception{
+	public int Sua(String masach, String tensach, String tacgia, long gia, long soluong, Date ngaynhap, String anh, String sotap, String maloai) throws Exception{
 		return s.Sua(masach, tensach, tacgia, gia, soluong, ngaynhap, anh, sotap, maloai);
 	}
 	public int Xoa(String masach) throws Exception{

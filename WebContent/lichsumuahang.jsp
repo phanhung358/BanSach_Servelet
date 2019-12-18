@@ -1,3 +1,5 @@
+<%@page import="bean.hoadonbean"%>
+<%@page import="bean.chitiethoadonbean"%>
 <%@page import="bean.dangnhapbean"%>
 <%@page import="bo.giohangbo"%>
 <%@page import="bean.sachbean"%>
@@ -21,21 +23,12 @@
 <!-- Custom CSS -->
 <link href="Content/shop-homepage.css" rel="stylesheet">
 
-        <style>
-            /** CSS căn id pagination ra giữa màn hình **/
-            #pagination {
-                display: flex;
-                display: -webkit-flex; /* Safari 8 */
-                flex-wrap: wrap;
-                -webkit-flex-wrap: wrap; /* Safari 8 */
-                justify-content: center;
-                -webkit-justify-content: center;
-            }
-        </style>
-
 </head>
 <body>
 	<%
+	if(request.getAttribute("ktdn")!=null)
+		out.print("<script>alert('Lỗi: Tên đăng nhập hoặc mật khẩu không đúng!')</script>");
+	
 	long soluong, tongtien;
 	giohangbo gh = null;
 	if(session.getAttribute("gh")==null){
@@ -69,7 +62,6 @@
                     <li>
                         <a href="dkcontroller">ĐĂNG K&#221;</a>
                     </li>
-                    
                     <%
                     String un = (String)session.getAttribute("un");
             		if(un != null){
@@ -219,55 +211,74 @@
                         </div>
                     </div>
                 </div>
-
-
-                <div>
-
-
-
-
-                    <h3 style="Text-align:Center; color:red"> SÁCH MỚI </h3>
-                    <div class="row">
-                    <%
-                    ArrayList<sachbean> dssach = new ArrayList<sachbean>();
-                    dssach = (ArrayList<sachbean>)request.getAttribute("dssach");
-                    for(sachbean sach:dssach){
-                    %>
-                        <div class="col-sm-4 col-lg-4 col-md-4 contentPage">
-                            <div class="thumbnail">
-                                <a href="chitietsachcontroller?ms=<%=sach.getMasach()%>">
-                                    <img alt="<%=sach.getTensach() %>" src="<%=sach.getAnh() %>" width="200" />
-                                    <div>
-                                        <br />
-                                        <h4 style="text-align:center">
-                                            <%=sach.getTensach() %>
-                                        </h4>
-                                        <p></p>
-                                    </div>
-
-                                    <div class="ratings">
-                                        <p class="pull-right">15 reviews</p>
-                                        <p>
-                                            <span class="glyphicon glyphicon-star"></span>
-                                            <span class="glyphicon glyphicon-star">
-                                            </span>
-                                            <span class="glyphicon glyphicon-star"></span>
-                                            <span class="glyphicon glyphicon-star"></span>
-                                            <span class="glyphicon glyphicon-star"></span>
-                                        </p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    <%} %>
-                    </div>      
-                    
-                    <!-- Hiên thị nút bấm -->
-        			<ul id="pagination"></ul>
-                    
-                </div>
-
-            </div>
+				<div class="row">
+					<table class="table-bordered table-hover shadow p-3 my-3" width="80%" align="center">
+					<%
+					long tong = 0;
+					ArrayList<sachbean> dssach = (ArrayList<sachbean>)request.getAttribute("dssach");
+					ArrayList<chitiethoadonbean> dsct = (ArrayList<chitiethoadonbean>)request.getAttribute("dsct");
+					if(dsct != null && dsct.size() != 0){ %>
+						<tr>
+							<td> Mã sách </td>
+							<td> Tên Sách </td>
+							<td> Ảnh </td>
+							<td> Giá </td>
+							<td> Số lượng mua </td>
+							<td> Mã HĐ </td>
+						</tr>
+					<%
+					for(chitiethoadonbean c:dsct){
+					%>
+						<tr align="center">
+							<td><%=c.getMasach() %></td>
+							<%
+							for(sachbean s:dssach){
+								if(s.getMasach().equals(c.getMasach())){
+							%>
+								<td><%=s.getTensach() %></td>
+								<td><img alt="" src="<%=s.getAnh() %>"></td>
+								<td><%=s.getGia() %></td>
+							<%
+							tong = tong + s.getGia() * c.getSoluongmua();
+							} }%>
+							<td><%=c.getSoluongmua() %></td>
+							<td><%=c.getMahoadon() %></td>
+						</tr>
+					<%}%>
+						<tr style="color: red;">
+							<td colspan="3" align="right">Tổng tiền:</td>
+							<td colspan="3"><%=tong %> VNĐ</td>
+						</tr>
+					<%} %>
+					</table>
+				</div>
+				<br>
+				<div class="row">
+					<table class="table-bordered table-hover" width="100%" align="center">
+						<tr>
+							<td> Mã HĐ </td>
+							<td> Ngày mua(Ngày đặt hàng) </td>
+							<td> Tình trạng </td>
+							<td></td>
+						</tr>
+					<%
+					ArrayList<hoadonbean> dshd = (ArrayList<hoadonbean>)request.getAttribute("dshd");
+					for(hoadonbean h:dshd){
+					%>
+						<tr align="center">
+							<td><%=h.getMahoadon() %></td>
+							<td><%=h.getNgaymua() %></td>
+							<%if(h.isDamua()){ %>
+								<td>Đã mua</td>
+							<%} else { %>
+								<td>Đang đặt hàng</td>
+							<%} %>
+							<td><button class="btn btn-primary"><a style="color: white;" href="lsmhcontroller?machon=<%=h.getMahoadon()%>"> Chọn </a></button></td>
+						</tr>
+					<%} %>
+					</table>
+				</div>
+             </div>
         </div>
     </div>
     <!-- /.container -->
@@ -285,37 +296,9 @@
     <!-- /.container -->
     <!-- jQuery -->
     <script src="Scripts/jquery.js"></script>
-	
+
     <!-- Bootstrap Core JavaScript -->
     <script src="Scripts/bootstrap.min.js"></script>
-    
-    <script src="Scripts/pagination.js"></script>
-    <script type="text/javascript">
-            $(function () {
-                var pageSize = 12; // Hiển thị 6 sản phẩm trên 1 trang
-                showPage = function (page) {
-                    $(".contentPage").hide();
-                    $(".contentPage").each(function (n) {
-                        if (n >= pageSize * (page - 1) && n < pageSize * page)
-                            $(this).show();
-                    });
-                }
-                showPage(1);
-                ///** Cần truyền giá trị vào đây **///
-                var totalRows = <%=dssach.size()%>; // Tổng số sản phẩm hiển thị
-                var btnPage = 5; // Số nút bấm hiển thị di chuyển trang
-                var iTotalPages = Math.ceil(totalRows / pageSize);
 
-                var obj = $('#pagination').twbsPagination({
-                    totalPages: iTotalPages,
-                    visiblePages: btnPage,
-                    onPageClick: function (event, page) {
-                        console.info(page);
-                        showPage(page);
-                    }
-                });
-                console.info(obj.data());
-            });
-        </script>
 </body>
 </html>

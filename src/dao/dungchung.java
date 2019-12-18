@@ -10,7 +10,7 @@ public class dungchung {
 		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		System.out.print("Đã xác định HQTCSDL");
 		//b2: Kết nối
-		String url = "jdbc:sqlserver://DESKTOP-M9R87F6:1433;databaseName=QlSach;user=sa;password=123";
+		String url = "jdbc:sqlserver://PHANHUNGPC:1433;databaseName=QlSach;user=sa;password=123";
 		cn = DriverManager.getConnection(url);
 		System.out.print("Đã kết nối");
 		

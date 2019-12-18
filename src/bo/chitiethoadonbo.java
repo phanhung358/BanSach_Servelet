@@ -7,16 +7,21 @@ import dao.chitiethoadondao;
 
 public class chitiethoadonbo {
 	chitiethoadondao ct = new chitiethoadondao();
-	public ArrayList<chitiethoadonbean> gethoadon() throws Exception{
-		return ct.gethoadon();
+	public ArrayList<chitiethoadonbean> getchitiet() throws Exception{
+		return ct.getchitiet();
 	}
 	public int Them(long machitiethd, String masach, int soluongmua, long mahoadon) throws Exception{
 		return ct.Them(machitiethd, masach, soluongmua, mahoadon);
 	}
-	public int Xoa(String mahoadon) throws Exception{
+	public int Xoa(long mahoadon) throws Exception{
 		return ct.Xoa(mahoadon);
 	}
 	public long Max() throws Exception{
-		return ct.Max();
+		long Max = 0;
+		for(chitiethoadonbean c:this.getchitiet()) {
+			if(c.getMachitiethd() > Max)
+				Max = c.getMachitiethd();
+		}
+		return Max;
 	}
 }

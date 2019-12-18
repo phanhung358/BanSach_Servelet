@@ -58,10 +58,14 @@
                     <li>
                         <a href="dkcontroller">ĐĂNG K&#221;</a>
                     </li>
+                    
                      <%
                     String un = (String)session.getAttribute("un");
             		if(un != null){
                     %>
+                    <li>
+                        <a href="lsmhcontroller">LỊCH SỬ MUA HÀNG</a>
+                    </li>
                     <li>
                         <a href=""><%=un %></a>
                     </li>
